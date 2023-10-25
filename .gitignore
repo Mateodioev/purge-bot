@@ -1,0 +1,11 @@
+# Dirs
+/vendor
+/.idea/
+/fn-tests/
+/.devcontainer/
+
+
+# files
+.env
+composer.lock
+*.cache

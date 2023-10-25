@@ -1,0 +1,18 @@
+{
+    "name": "mateodioev/purge-bot",
+    "description": "Bot for delete messages in telegram",
+    "type": "project",
+    "require": {
+        "mateodioev/tg-handler": "^5.1",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.35"
+    }
+}
