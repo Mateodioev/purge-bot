@@ -10,9 +10,15 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.35"
+    },
+    "scripts": {
+        "fix": "php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose"
     }
 }

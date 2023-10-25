@@ -2,6 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->ignoreDotFiles(true)
+    ->exclude('vendor')
     ->in(__DIR__);
 
 $config = new PhpCsFixer\Config();
