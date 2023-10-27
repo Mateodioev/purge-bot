@@ -6,8 +6,8 @@ Example bot to delete messages
 
 Clone the repository
 ```bash
-git clone https://github.com/Mateodioev/...
-cd ...
+git clone https://github.com/Mateodioev/purge-bot purge-bot-php
+cd purge-bot-php
 ```
 
 Install dependencies
