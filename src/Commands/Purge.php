@@ -11,6 +11,10 @@ use Mateodioev\Bots\Telegram\Exception\TelegramApiException;
 use function Amp\async;
 use function Amp\Future\awaitAll;
 
+/**
+ * Only works in public chats
+ * Note: need to be admin in the chat
+ */
 #[FilterPublicChat]
 class Purge extends MessageCommand
 {
@@ -58,12 +62,17 @@ class Purge extends MessageCommand
 
     private function isNotReply(): void
     {
-        $this->api()->replyToMessage($this->ctx()->message, '<b>Please reply to a message to delete</b>');
+        $this->api()->replyToMessage($this->ctx()->message(), '<b>Please reply to a message to delete</b>');
     }
 
     private function finishedDelete(float $totalTime): void
     {
-        $this->api()->replyToMessage($this->ctx()->message, 'Purge finished in <i>' . round($totalTime, 2) . '\'s</i>');
+        $message = $this->api()->replyToMessage($this->ctx()->message(), 'Purge finished in <i>' . round($totalTime, 2) . '\'s</i>');
+
+        // Delete message after 15 seconds
+        $this->sleep(15);
+        $this->api()->deleteMessage($this->ctx()->getChatId(), $this->ctx()->message()->messageId());
+        $this->api()->deleteMessage($this->ctx()->getChatId(), $message->messageId());
     }
 
     private function createAsyncDelete(int $chatID, int $messageID): \Amp\Future

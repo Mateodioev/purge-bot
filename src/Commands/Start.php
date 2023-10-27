@@ -2,27 +2,25 @@
 
 namespace App\Commands;
 
-use Mateodioev\TgHandler\Commands\MessageCommand;
-use Mateodioev\Bots\Telegram\Api;
-use Mateodioev\Bots\Telegram\Types\User;
-use Mateodioev\TgHandler\Context;
+use Mateodioev\TgHandler;
+use Mateodioev\Bots\Telegram;
 
-class Start extends MessageCommand
+class Start extends TgHandler\Commands\MessageCommand
 {
     protected string $name  = 'start';
     protected array $prefix = ['/', '!', '.'];
 
-    public function handle(Api $bot, Context $context, $args = [])
+    public function handle(Telegram\Api $bot, TgHandler\Context $context, $args = [])
     {
         $this->api()->replyTo(
             $this->ctx()->getChatId(),
-            self::getStartMessage($this->ctx()->getUser),
+            self::getStartMessage($this->ctx()->getUser()),
             $this->ctx()->getMessageId()
         );
     }
 
 
-    public function getStartMessage(User $user): string
+    public static function getStartMessage(Telegram\Types\User $user): string
     {
         return sprintf(
             "Hi %s, I'm a bot to delete messages in bulk\n\nUsage:\n/purge reply to a message",

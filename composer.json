@@ -4,7 +4,10 @@
     "type": "project",
     "require": {
         "mateodioev/tg-handler": "^5.1",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "amphp/http-server": "^3.2",
+        "monolog/monolog": "^3.4",
+        "amphp/log": "^2.0"
     },
     "license": "MIT",
     "autoload": {
