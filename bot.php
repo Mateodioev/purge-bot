@@ -6,20 +6,27 @@ use App\Commands\{Purge, Start, All};
 use App\MemoryDbAdapter;
 use Mateodioev\TgHandler\Log\{BulkStream, FileStream, Logger, TerminalStream};
 
+if ($argv[0] === \basename(__FILE__)) {
+    fprintf(STDERR, "Do not run this file directly\n");
+    exit(1);
+}
+
 Dotenv::createImmutable(__DIR__)->load();
 
-$bot = new Bot(env('BOT_TOKEN'));
-$bot->setDb(new MemoryDbAdapter());
-
 $logger = new Logger(
-    new BulkStream(new TerminalStream(), new FileStream(__DIR__ . '/info.log')),
+    new BulkStream( // Log to both terminal and file
+        new TerminalStream(),
+        new FileStream(env('PWD_PATH', __DIR__) . '/info.log')
+    ),
 );
-$logger->setLevel(Logger::DEBUG, false); // Disable debug logs
+// $logger->setLevel(Logger::DEBUG, false); // Disable debug logs
+
+$bot = new Bot(env('BOT_TOKEN'), $logger);
+$bot->setDb(new MemoryDbAdapter());
 
 $bot->setLogger($logger)
     ->onEvent(Purge::get())
     ->onEvent(Start::get())
-    ->onEvent(new All())
-;
+    ->onEvent(new All());
 
 return $bot;
